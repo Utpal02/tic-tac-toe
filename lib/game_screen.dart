@@ -1,9 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/home_screen.dart';
 
+// ignore: must_be_immutable
 class GameScreen extends StatefulWidget {
-  final String player1;
-  final String player2;
+  String player1;
+  String player2;
   GameScreen({required this.player1, required this.player2});
   @override
   State<GameScreen> createState() => _GameScreenState();
@@ -76,9 +78,9 @@ class _GameScreenState extends State<GameScreen> {
           animType: AnimType.rightSlide,
           btnOkText: "Play Again",
           title: _winner == "X"
-              ? widget.player1 + "Won!"
+              ? widget.player1 + " Won!"
               : _winner == "O"
-                  ? widget.player2 + "Won!"
+                  ? widget.player2 + " Won!"
                   : "It's a Tie",
           btnOkOnPress: () {
             _resetGame();
@@ -96,10 +98,10 @@ class _GameScreenState extends State<GameScreen> {
           child: Column(
             children: [
               SizedBox(
-                height: 70,
+                height: 100,
               ),
               SizedBox(
-                height: 120,
+                height: 550,
                 child: Column(
                   children: [
                     Row(
@@ -171,6 +173,59 @@ class _GameScreenState extends State<GameScreen> {
                     )
                   ],
                 ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InkWell(
+                    onTap: _resetGame,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+                      child: Text(
+                        "Reset Game",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeScreen()));
+                      widget.player1 = "";
+                      widget.player2 = "";
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+                      child: Text(
+                        "Restart Game",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               )
             ],
           ),

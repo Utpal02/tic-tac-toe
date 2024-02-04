@@ -2,8 +2,8 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 
 class GameScreen extends StatefulWidget {
-  String player1;
-  String player2;
+  final String player1;
+  final String player2;
   GameScreen({required this.player1, required this.player2});
   @override
   State<GameScreen> createState() => _GameScreenState();
@@ -119,9 +119,55 @@ class _GameScreenState extends State<GameScreen> {
                           style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                              color: _currentPlayer == "X"
+                                  ? Colors.orange
+                                  : Color(0xff1cbd9e)),
                         ),
                       ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blueGrey,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      margin: EdgeInsets.all(5),
+                      child: GridView.builder(
+                          itemCount: 9,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                          ),
+                          itemBuilder: (context, index) {
+                            int row = index ~/ 3;
+                            int col = index % 3;
+                            return GestureDetector(
+                              onTap: () => _makeMove(row, col),
+                              child: Container(
+                                margin: EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                  color: Color(0xff0e1e3a),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    _board[row][col],
+                                    style: TextStyle(
+                                      fontSize: 120,
+                                      fontWeight: FontWeight.bold,
+                                      color: _board[row][col] == "X"
+                                          ? Color(0xffe25041)
+                                          : Color(0xff1cbd9e),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
                     )
                   ],
                 ),
